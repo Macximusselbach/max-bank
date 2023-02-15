@@ -1,4 +1,4 @@
-package br.com.selbach.MaxBank.repository;
+package br.com.selbach.MaxBank.repository.client;
 
 import br.com.selbach.MaxBank.entity.ClientEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

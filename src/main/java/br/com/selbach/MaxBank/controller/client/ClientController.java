@@ -1,4 +1,4 @@
-package br.com.selbach.MaxBank.controller;
+package br.com.selbach.MaxBank.controller.client;
 
 import br.com.selbach.MaxBank.entity.ClientEntity;
 import br.com.selbach.MaxBank.service.client.ClientService;

@@ -4,7 +4,7 @@ import br.com.selbach.MaxBank.entity.ClientEntity;
 import br.com.selbach.MaxBank.exception.ClientNotFoundException;
 import br.com.selbach.MaxBank.exception.CpfAlreadyExistsException;
 import br.com.selbach.MaxBank.exception.EmailAlreadyExistsException;
-import br.com.selbach.MaxBank.repository.ClientRepository;
+import br.com.selbach.MaxBank.repository.client.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

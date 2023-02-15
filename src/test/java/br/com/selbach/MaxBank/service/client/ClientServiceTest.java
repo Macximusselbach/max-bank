@@ -1,16 +1,16 @@
 package br.com.selbach.MaxBank.service.client;
 
 import br.com.selbach.MaxBank.TestBase;
-import br.com.selbach.MaxBank.doubles.client.FakeClientDatabase;
 import br.com.selbach.MaxBank.entity.ClientEntity;
 import br.com.selbach.MaxBank.exception.ClientNotFoundException;
 import br.com.selbach.MaxBank.exception.CpfAlreadyExistsException;
 import br.com.selbach.MaxBank.exception.EmailAlreadyExistsException;
-import br.com.selbach.MaxBank.repository.ClientRepository;
+import br.com.selbach.MaxBank.repository.client.ClientRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +29,6 @@ class ClientServiceTest extends TestBase {
 
     @Mock
     ClientRepository clientRepository;
-
-    FakeClientDatabase fakeClientDatabase = new FakeClientDatabase();
 
     @InjectMocks
     ClientService clientService;
