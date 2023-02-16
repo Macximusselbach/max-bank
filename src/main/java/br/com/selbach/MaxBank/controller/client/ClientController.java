@@ -1,6 +1,6 @@
 package br.com.selbach.MaxBank.controller.client;
 
-import br.com.selbach.MaxBank.entity.ClientEntity;
+import br.com.selbach.MaxBank.entity.client.ClientEntity;
 import br.com.selbach.MaxBank.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +19,22 @@ public class ClientController {
     public ResponseEntity getAll() {
 
         try {
-            return new ResponseEntity(clientService.findAll(), HttpStatus.OK);
+            return new ResponseEntity(clientService.getAll(), HttpStatus.OK);
 
         } catch (Exception exception) {
             return new ResponseEntity("Não foi possível conectar ao banco de dados!", HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getById(@PathVariable Long id) {
+
+        try {
+            return new ResponseEntity(clientService.getById(id), HttpStatus.OK);
+
+        } catch (Exception exception) {
+            return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
 
         }
     }

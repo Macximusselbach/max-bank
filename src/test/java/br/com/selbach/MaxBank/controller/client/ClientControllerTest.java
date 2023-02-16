@@ -1,7 +1,7 @@
 package br.com.selbach.MaxBank.controller.client;
 
 import br.com.selbach.MaxBank.TestBase;
-import br.com.selbach.MaxBank.entity.ClientEntity;
+import br.com.selbach.MaxBank.entity.client.ClientEntity;
 import br.com.selbach.MaxBank.service.client.ClientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,7 +59,7 @@ class ClientControllerTest extends TestBase {
 
     @Test
     void shouldReturnOkStatusAndClientList_whenGetAll() throws Exception {
-        when(clientService.findAll()).thenReturn(List.of(client1));
+        when(clientService.getAll()).thenReturn(List.of(client1));
 
         mockMvc.perform(get("/client"))
                 .andDo(print())
@@ -70,12 +70,33 @@ class ClientControllerTest extends TestBase {
 
     @Test
     void shouldReturnInternalServerErrorStatusAndCantConnectMessage_whenGetAll() throws Exception {
-        when(clientService.findAll()).thenThrow(new NullPointerException());
+        when(clientService.getAll()).thenThrow(new NullPointerException());
 
         mockMvc.perform(get("/client"))
                 .andDo(print())
                 .andExpect(status().isInternalServerError())
                 .andExpect(content().string("Não foi possível conectar ao banco de dados!"));
+
+    }
+
+    @Test
+    void shouldReturnOkStatusAndClient_whenGetById() throws Exception {
+        when(clientService.getById(1L)).thenReturn(client1);
+
+        mockMvc.perform(get("/client/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("{'id':1,'name':'Teste','email':'teste@gmail.com','cpf':'12345678910','balance':0.0}"));
+
+    }
+
+    @Test
+    void shouldReturnNotFoundStatus_whenGetById() throws Exception {
+        when(clientService.getById(1L)).thenThrow(new RuntimeException());
+
+        mockMvc.perform(get("/client/1"))
+                .andDo(print())
+                .andExpect(status().isNotFound());
 
     }
 
@@ -141,7 +162,7 @@ class ClientControllerTest extends TestBase {
 
     @Test
     void shouldReturnOkStatusAndDeletedMessage_whenDelete() throws Exception {
-        when(clientService.delete(Mockito.any())).thenReturn("Cliente deletado com sucesso!");
+        when(clientService.delete(1L)).thenReturn("Cliente deletado com sucesso!");
 
         mockMvc.perform(delete("/client/1"))
                 .andDo(print())
@@ -153,7 +174,7 @@ class ClientControllerTest extends TestBase {
 
     @Test
     void shouldReturnNotfoundStatus_whenDelete() throws Exception {
-        when(clientService.delete(Mockito.any())).thenThrow(new RuntimeException());
+        when(clientService.delete(1L)).thenThrow(new RuntimeException());
 
         mockMvc.perform(delete("/client/1"))
                 .andDo(print())

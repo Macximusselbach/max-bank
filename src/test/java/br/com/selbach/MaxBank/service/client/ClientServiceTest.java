@@ -1,7 +1,7 @@
 package br.com.selbach.MaxBank.service.client;
 
 import br.com.selbach.MaxBank.TestBase;
-import br.com.selbach.MaxBank.entity.ClientEntity;
+import br.com.selbach.MaxBank.entity.client.ClientEntity;
 import br.com.selbach.MaxBank.exception.ClientNotFoundException;
 import br.com.selbach.MaxBank.exception.CpfAlreadyExistsException;
 import br.com.selbach.MaxBank.exception.EmailAlreadyExistsException;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,11 +56,31 @@ class ClientServiceTest extends TestBase {
     void shouldReturnClientList_whenFindAll() {
         when(clientRepository.findAll()).thenReturn(clientList);
 
-        var result = clientService.findAll();
+        var result = clientService.getAll();
 
         verify(clientRepository).findAll();
 
         assertEquals(clientList, result);
+
+    }
+
+    @Test
+    void shouldReturnClient_whenGetById(){
+        when(clientRepository.findById(1L)).thenReturn(Optional.ofNullable(client1));
+
+        var result = clientService.getById(1L);
+
+        verify(clientRepository).findById(1L);
+
+        assertEquals(client1, result);
+
+    }
+
+    @Test
+    void shouldReturnClientNotFoundException_whenGetByIdWithNoExistingId() {
+        var result = assertThrows(ClientNotFoundException.class, () -> clientService.getById(1L));
+
+        assertEquals("Cliente não encontrado!", result.getMessage());
 
     }
 
@@ -100,7 +119,7 @@ class ClientServiceTest extends TestBase {
     void shouldReturnModifiedClient_whenPut() {
         client1.setEmail("teste01@gmail.com");
 
-        when(clientRepository.findById(client1.getId())).thenReturn(Optional.ofNullable(client1));
+        when(clientRepository.findById(1L)).thenReturn(Optional.ofNullable(client1));
         when(clientRepository.save(client1)).thenReturn(client1);
 
         var result = clientService.put(client1);
@@ -121,11 +140,11 @@ class ClientServiceTest extends TestBase {
 
     @Test
     void shouldReturnDeletedMessage_whenDelete() {
-        when(clientRepository.findById(client2.getId())).thenReturn(Optional.ofNullable(client2));
+        when(clientRepository.findById(2L)).thenReturn(Optional.ofNullable(client2));
 
-        var result = clientService.delete(client2.getId());
+        var result = clientService.delete(2L);
 
-        verify(clientRepository).deleteById(client2.getId());
+        verify(clientRepository).deleteById(2L);
 
         assertEquals("Cliente deletado com sucesso!", result);
 

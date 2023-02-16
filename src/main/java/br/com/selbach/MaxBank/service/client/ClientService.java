@@ -1,6 +1,6 @@
 package br.com.selbach.MaxBank.service.client;
 
-import br.com.selbach.MaxBank.entity.ClientEntity;
+import br.com.selbach.MaxBank.entity.client.ClientEntity;
 import br.com.selbach.MaxBank.exception.ClientNotFoundException;
 import br.com.selbach.MaxBank.exception.CpfAlreadyExistsException;
 import br.com.selbach.MaxBank.exception.EmailAlreadyExistsException;
@@ -16,8 +16,20 @@ public class ClientService {
     @Autowired
     ClientRepository clientRepository;
 
-    public List<ClientEntity> findAll() {
+    public List<ClientEntity> getAll() {
         return clientRepository.findAll();
+
+    }
+
+    public ClientEntity getById(Long id) throws ClientNotFoundException {
+        Optional<ClientEntity> clientFromId = clientRepository.findById(id);
+
+        if(clientFromId.isEmpty()) {
+            throw new ClientNotFoundException();
+
+        }
+
+        return clientFromId.get();
 
     }
 
