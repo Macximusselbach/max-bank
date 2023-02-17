@@ -8,6 +8,7 @@ public class MaxBankApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MaxBankApplication.class, args);
+
 	}
 
 }

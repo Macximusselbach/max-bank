@@ -7,6 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class Client {
 
+    private Long id;
+
     private String name;
 
     private String email;
@@ -14,6 +16,5 @@ public class Client {
     private String cpf;
 
     private Double balance;
-
 
 }

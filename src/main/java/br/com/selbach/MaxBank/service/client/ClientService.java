@@ -47,6 +47,7 @@ public class ClientService {
 
         }
 
+        client.setBalance(0.0);
         return clientRepository.save(client);
 
     }
